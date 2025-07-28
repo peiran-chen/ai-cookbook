@@ -10,8 +10,15 @@ from openai import OpenAI
 
 def basic_intelligence(prompt: str) -> str:
     client = OpenAI()
-    response = client.responses.create(model="gpt-4o", input=prompt)
-    return response.output_text
+    response = client.chat.completions.create(
+        model="azure/gpt-4o",  # Model configured in your LiteLLM proxy
+        messages=[{"role": "user", "content": prompt}]
+    )
+    # print(response)
+    return response.choices[0].message.content
+
+    # response = client.responses.create(model="azure/gpt-4o", input=prompt)
+    # return response.output_text
 
 
 if __name__ == "__main__":

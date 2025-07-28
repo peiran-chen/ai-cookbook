@@ -11,35 +11,35 @@ client = OpenAI()
 
 
 def ask_joke_without_memory():
-    response = client.responses.create(
-        model="gpt-4o-mini",
-        input=[
+    response = client.chat.completions.create(
+        model="azure/gpt-4o",
+        messages=[
             {"role": "user", "content": "Tell me a joke about programming"},
         ],
     )
-    return response.output_text
+    return response.choices[0].message.content
 
 
 def ask_followup_without_memory():
-    response = client.responses.create(
-        model="gpt-4o-mini",
-        input=[
+    response = client.chat.completions.create(
+        model="azure/gpt-4o",
+        messages=[
             {"role": "user", "content": "What was my previous question?"},
         ],
     )
-    return response.output_text
+    return response.choices[0].message.content
 
 
 def ask_followup_with_memory(joke_response: str):
-    response = client.responses.create(
-        model="gpt-4o-mini",
-        input=[
+    response = client.chat.completions.create(
+        model="azure/gpt-4o",
+        messages=[
             {"role": "user", "content": "Tell me a joke about programming"},
             {"role": "assistant", "content": joke_response},
             {"role": "user", "content": "What was my previous question?"},
         ],
     )
-    return response.output_text
+    return response.choices[0].message.content
 
 
 if __name__ == "__main__":
