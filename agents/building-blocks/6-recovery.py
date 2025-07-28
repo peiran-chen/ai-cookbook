@@ -18,17 +18,18 @@ def resilient_intelligence(prompt: str) -> str:
     client = OpenAI()
 
     # Get structured output
-    response = client.responses.parse(
-        model="gpt-4o",
-        input=[
+    response = client.chat.completions.parse(
+        model="azure/gpt-4o",
+        messages=[
             {"role": "system", "content": "Extract user information from the text."},
             {"role": "user", "content": prompt},
         ],
-        text_format=UserInfo,
+        response_format=UserInfo,
         temperature=0.0,
     )
 
-    user_data = response.output_parsed.model_dump()
+    user_data = response.choices[0].message.parsed.model_dump()
+    print(f"User data: {user_data}")
 
     try:
         # Try to access age field and check if it's valid
@@ -47,7 +48,7 @@ def resilient_intelligence(prompt: str) -> str:
 
 if __name__ == "__main__":
     result = resilient_intelligence(
-        "My name is John Smith and my email is john@example.com"
+        "My name is John Smith and my email is john@example.com."
     )
     print("Recovery Output:")
     print(result)

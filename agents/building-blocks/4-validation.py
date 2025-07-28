@@ -21,18 +21,18 @@ class TaskResult(BaseModel):
 
 def structured_intelligence(prompt: str) -> TaskResult:
     client = OpenAI()
-    response = client.responses.parse(
-        model="gpt-4o",
-        input=[
+    response = client.chat.completions.parse(
+        model="azure/gpt-4o",
+        messages=[
             {
                 "role": "system",
                 "content": "Extract task information from the user input.",
             },
             {"role": "user", "content": prompt},
         ],
-        text_format=TaskResult,
+        response_format=TaskResult,
     )
-    return response.output_parsed
+    return response.choices[0].message.parsed
 
 
 if __name__ == "__main__":

@@ -15,8 +15,11 @@ def get_human_approval(content: str) -> bool:
 def intelligence_with_human_feedback(prompt: str) -> None:
     client = OpenAI()
 
-    response = client.responses.create(model="gpt-4o", input=prompt)
-    draft_response = response.output_text
+    response = client.chat.completions.create(
+        model="azure/gpt-4o",
+        messages=[{"role": "user", "content": prompt}],
+    )
+    draft_response = response.choices[0].message.content
 
     if get_human_approval(draft_response):
         print("Final answer approved")

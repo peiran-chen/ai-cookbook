@@ -16,19 +16,19 @@ class IntentClassification(BaseModel):
 
 def route_based_on_intent(user_input: str) -> tuple[str, IntentClassification]:
     client = OpenAI()
-    response = client.responses.parse(
-        model="gpt-4o",
-        input=[
+    response = client.chat.completions.parse(
+        model="azure/gpt-4o",
+        messages=[
             {
                 "role": "system",
                 "content": "Classify user input into one of three categories: question, request, or complaint. Provide your reasoning and confidence level.",
             },
             {"role": "user", "content": user_input},
         ],
-        text_format=IntentClassification,
+        response_format=IntentClassification,
     )
 
-    classification = response.output_parsed
+    classification = response.choices[0].message.parsed
     intent = classification.intent
 
     if intent == "question":
@@ -45,10 +45,13 @@ def route_based_on_intent(user_input: str) -> tuple[str, IntentClassification]:
 
 def answer_question(question: str) -> str:
     client = OpenAI()
-    response = client.responses.create(
-        model="gpt-4o", input=f"Answer this question: {question}"
+    response = client.chat.completions.create(
+        model="azure/gpt-4o",
+        messages=[
+            {"role": "user", "content": f"Answer this question: {question}"}
+        ],
     )
-    return response.output[0].content[0].text
+    return response.choices[0].message.content
 
 
 def process_request(request: str) -> str:
