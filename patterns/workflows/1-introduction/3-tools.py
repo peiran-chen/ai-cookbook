@@ -57,7 +57,7 @@ messages = [
 ]
 
 completion = client.chat.completions.create(
-    model="gpt-4o",
+    model="azure/gpt-4o",
     messages=messages,
     tools=tools,
 )
@@ -102,8 +102,8 @@ class WeatherResponse(BaseModel):
     )
 
 
-completion_2 = client.beta.chat.completions.parse(
-    model="gpt-4o",
+completion_2 = client.chat.completions.parse(
+    model="azure/gpt-4o",
     messages=messages,
     tools=tools,
     response_format=WeatherResponse,
@@ -114,5 +114,6 @@ completion_2 = client.beta.chat.completions.parse(
 # --------------------------------------------------------------
 
 final_response = completion_2.choices[0].message.parsed
+print(f"Final response: {final_response}")
 final_response.temperature
 final_response.response

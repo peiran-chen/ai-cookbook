@@ -22,7 +22,7 @@ class CalendarEvent(BaseModel):
 # --------------------------------------------------------------
 
 completion = client.beta.chat.completions.parse(
-    model="gpt-4o",
+    model="azure/gpt-4o",
     messages=[
         {"role": "system", "content": "Extract the event information."},
         {
@@ -38,6 +38,7 @@ completion = client.beta.chat.completions.parse(
 # --------------------------------------------------------------
 
 event = completion.choices[0].message.parsed
+print(f"Event: {event}")
 event.name
 event.date
 event.participants

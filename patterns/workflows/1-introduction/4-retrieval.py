@@ -55,7 +55,7 @@ messages = [
 ]
 
 completion = client.chat.completions.create(
-    model="gpt-4o",
+    model="azure/gpt-4o",
     messages=messages,
     tools=tools,
 )
@@ -96,8 +96,8 @@ class KBResponse(BaseModel):
     source: int = Field(description="The record id of the answer.")
 
 
-completion_2 = client.beta.chat.completions.parse(
-    model="gpt-4o",
+completion_2 = client.chat.completions.parse(
+    model="azure/gpt-4o",
     messages=messages,
     tools=tools,
     response_format=KBResponse,
@@ -120,8 +120,8 @@ messages = [
     {"role": "user", "content": "What is the weather in Tokyo?"},
 ]
 
-completion_3 = client.beta.chat.completions.parse(
-    model="gpt-4o",
+completion_3 = client.chat.completions.parse(
+    model="azure/gpt-4o",
     messages=messages,
     tools=tools,
 )

@@ -22,6 +22,6 @@ def basic_intelligence(prompt: str) -> str:
 
 
 if __name__ == "__main__":
-    result = basic_intelligence(prompt="What is artificial intelligence?")
+    result = basic_intelligence(prompt="What day was this LLM model built on?")
     print("Basic Intelligence Output:")
     print(result)
